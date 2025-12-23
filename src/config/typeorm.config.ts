@@ -1,6 +1,7 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm"; 
 import { time } from "console";
 import { connect } from "http2";
+import { User } from "../entities/user.entity";
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
     
@@ -15,6 +16,8 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   charset: 'utf8mb4_general_ci',
   timezone: '+09:00',
 
+  entities:[User],
+  
   synchronize: true,
   logging: ['error','query'],
   

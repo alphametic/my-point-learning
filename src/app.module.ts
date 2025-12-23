@@ -12,6 +12,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
+import { UserService } from './modules/user/user.service';
+import { PointService } from './modules/point/point.service';
+import { UserModule } from './modules/user/user.module';
 
 
 
@@ -30,6 +33,7 @@ import { typeOrmConfig } from './config/typeorm.config';
    */
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
+    UserModule,
   ],
 
   /**
@@ -51,7 +55,7 @@ import { typeOrmConfig } from './config/typeorm.config';
    * - Service는 주입을 "당하는" 쪽
    * - @Injectable() 데코레이터가 있는 것들을 등록
    */
-  providers: [AppService],
+  providers: [AppService, PointService],
 })
 export class AppModule {
   // 모듈 클래스는 보통 비어있습니다.

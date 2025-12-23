@@ -4,7 +4,7 @@
  * 이 파일은 서버를 시작하는 파일입니다.
  * 자동차로 비유하면 "시동 버튼"과 같습니다.
  */
-
+import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';

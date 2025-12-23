@@ -9,8 +9,12 @@
  * - 요리(응답)를 손님에게 전달
  */
 
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service';
+import { PointService } from './modules/point/point.service';
+import { UserService } from './modules/user/user.service';
+import { User } from './entities/user.entity';
+import { CreateUserDto } from './modules/user/create-user.dto';
 
 /**
  * @Controller() 데코레이터
@@ -38,7 +42,11 @@ export class AppController {
    * private: 이 클래스 안에서만 사용 가능
    * readonly: 값을 변경할 수 없음 (읽기 전용)
    */
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly pointService: PointService,
+    private readonly userService: UserService,
+  ) {}
 
   /**
    * @Get() 데코레이터
@@ -80,5 +88,26 @@ export class AppController {
   @Get('user')
   getUser(): object {
     return this.appService.getUser();
+  }
+
+  @Get('point-info')
+  getPointInfo(): object {
+    return this.pointService.getUserPointInfo()
+  }
+
+  @Get('users')
+  async getUsers(): Promise<User[]> {
+    return await this.userService.findAll();
+  }
+
+  @Post('users')
+  async createUser(@Body() body: CreateUserDto): Promise<User> {
+     console.log('받은 body:', body);  // 👈 디버깅용 추가!
+         // body가 없으면 에러 처리
+    if (!body || !body.name || !body.email) {
+      throw new Error('name과 email을 보내주세요!');
+    }
+
+    return await this.userService.createUser(body.name, body.email);
   }
 }
