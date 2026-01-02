@@ -9,12 +9,13 @@
  * - 요리(응답)를 손님에게 전달
  */
 
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
 import { AppService } from './app.service';
 import { PointService } from './modules/point/point.service';
 import { UserService } from './modules/user/user.service';
 import { User } from './entities/user.entity';
-import { CreateUserDto } from './modules/user/create-user.dto';
+import { CreateUserDto } from './modules/user/dto/create-user.dto';
+import { UpdateUserDto } from './modules/user/dto/update-user.dto';
 
 /**
  * @Controller() 데코레이터
@@ -100,14 +101,41 @@ export class AppController {
     return await this.userService.findAll();
   }
 
-  @Post('users')
+  // @Post('users')
+  // async createUser(@Body() body: CreateUserDto): Promise<User> {
+  //    console.log('받은 body:', body);  // 👈 디버깅용 추가!
+  //        // body가 없으면 에러 처리
+  //   if (!body || !body.name || !body.email) {
+  //     throw new Error('name과 email을 보내주세요!');
+  //   }
+
+  //   return await this.userService.createUser(body.name, body.email);
+  // }
+
+    @Post('users')
   async createUser(@Body() body: CreateUserDto): Promise<User> {
      console.log('받은 body:', body);  // 👈 디버깅용 추가!
          // body가 없으면 에러 처리
-    if (!body || !body.name || !body.email) {
-      throw new Error('name과 email을 보내주세요!');
-    }
 
-    return await this.userService.createUser(body.name, body.email);
+    return await this.userService.create(body);
+  }
+
+
+  @Get('users/:id')
+  async getUserById(@Param('id') id: string): Promise<User> {
+    return await this.userService.findOne(+id);
+  }
+
+  @Patch('users/:id')
+  async updateUser(
+    @Param('id') id: string,
+    @Body() body: UpdateUserDto,
+  ): Promise<User> {
+    return await this.userService.updateUser(+id, body);
+  }
+
+  @Delete('users/:id')
+  async deleteUser(@Param('id') id: string): Promise<{message: string}> {
+    return await this.userService.remove(+id);
   }
 }

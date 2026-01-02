@@ -1,17 +1,17 @@
 # NestJS 학습 진행 상황
 
-> 📅 **마지막 업데이트**: 2025-12-23
-> 🎯 **다음 할 일**: Week 2 Day 8-10 - UserService 코드 작성 및 Controller 업데이트
+> 📅 **마지막 업데이트**: 2026-01-03
+> 🎯 **다음 할 일**: Week 2 마무리 - UpdateUserDto 개선 (PartialType), Swagger 데코레이터 추가
 
 ---
 
 ## ✅ 전체 진행률
 
 **Week 1**: ████████ 100% (7/7 완료) 🎉
-**Week 2**: ███░░░░░░ 30% (3/9 완료) 🔄
+**Week 2**: ███████░░ 80% (7/9 완료) 🔄
 **Week 3**: ░░░░░░░░░ 0% (0/7 완료)
 
-**전체**: ████████████░░░░░░░░ 43% (10/23 완료)
+**전체**: █████████████████░░░ 61% (14/23 완료)
 
 ---
 
@@ -102,11 +102,18 @@
   - create() 메서드: DTO → Entity 인스턴스 변환 (메모리)
   - save() 메서드: Entity를 데이터베이스에 저장
   - Object.assign() 동작 원리 학습
-- [ ] UserService 코드 작성 (findOne, create, update, remove)
-- [ ] 에러 처리 추가 (NotFoundException, ConflictException)
-- [ ] Controller 업데이트 (DTO 적용, PATCH/DELETE)
+- [x] **UserService 코드 작성** ✅ 완료 (2026-01-03)
+  - findOne(), create(), updateUser(), remove() 메서드 구현
+- [x] **에러 처리 추가** ✅ 완료 (2026-01-03)
+  - NotFoundException (404): 사용자 없을 때
+  - ConflictException (409): 이메일 중복 시
+- [x] **Controller 업데이트** ✅ 완료 (2026-01-03)
+  - GET /users/:id, PATCH /users/:id, DELETE /users/:id 추가
+  - @Param, @Patch, @Delete 데코레이터 사용
 - [ ] Swagger 데코레이터 추가
-- [ ] 전체 CRUD 테스트
+- [x] **전체 CRUD 테스트** ✅ 완료 (2026-01-03)
+  - 모든 엔드포인트 정상 동작 확인
+  - Validation 동작 확인
 
 ### Day 11-14: Validation 추가
 
@@ -135,6 +142,46 @@
 ---
 
 ## 📝 학습 노트
+
+### 2026-01-03 (Day 7) 🎉
+
+**완료한 것**:
+- ✅ UserService CRUD 메서드 전체 확인 및 이해
+  - findOne(): ID로 조회 + NotFoundException
+  - create(): DTO 사용 + ConflictException
+  - updateUser(): Object.assign + 에러 처리
+  - remove(): 삭제 + 메시지 반환
+- ✅ Controller 엔드포인트 추가
+  - GET /users/:id (특정 사용자 조회)
+  - PATCH /users/:id (사용자 수정)
+  - DELETE /users/:id (사용자 삭제)
+  - @Param, @Patch, @Delete 데코레이터 사용
+- ✅ ValidationPipe 전역 설정 (main.ts)
+  - whitelist: DTO에 없는 필드 자동 제거
+  - forbidNonWhitelisted: DTO에 없는 필드 있으면 에러
+  - transform: 자동 타입 변환
+- ✅ CreateUserDto에 validation 데코레이터 추가
+  - @IsNotEmpty, @IsString, @MinLength, @IsEmail
+- ✅ 전체 CRUD 테스트 성공
+  - 모든 엔드포인트 정상 동작
+  - Validation 에러 메시지 정상 출력
+
+**배운 개념**:
+- **ValidationPipe transform 옵션**: URL 파라미터(문자열)를 자동으로 숫자로 변환
+  - transform: false → @Param('id') id: number 해도 실제로는 문자열
+  - transform: true → 자동으로 숫자로 변환됨 (+id 불필요)
+- **PartialType**: CreateUserDto를 상속받아 모든 필드를 optional로 변환
+  - @nestjs/mapped-types 패키지 필요
+  - 코드 중복 없이 UpdateUserDto 생성 가능
+- **패키지 설치 방법**: yarn add vs package.json 직접 수정
+  - 명령어가 더 빠르고 안전 (버전 자동 선택, lock 파일 자동 업데이트)
+
+**다음 세션 계획**:
+- UpdateUserDto 개선 (PartialType 사용)
+- Swagger 데코레이터 추가 (@ApiTags, @ApiOperation 등)
+- +id를 id로 변경 (transform: true 활용)
+
+---
 
 ### 2025-12-23 (Day 6) 📚
 

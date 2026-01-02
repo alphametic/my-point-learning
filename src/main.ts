@@ -8,6 +8,7 @@ import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 /**
  * bootstrap 함수
  *
@@ -31,6 +32,12 @@ async function bootstrap() {
   // app.listen(): 서버를 시작하고 특정 포트에서 요청을 기다림
   // process.env.PORT: 환경 변수에서 포트 번호 가져오기
   // ?? 3000: 환경 변수가 없으면 3000번 포트 사용
+
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transform: true,
+  }));
   await app.listen(process.env.PORT ?? 3000);
 
   // 서버가 시작되면 http://localhost:3000 으로 접속 가능!
