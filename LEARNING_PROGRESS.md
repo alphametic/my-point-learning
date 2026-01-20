@@ -1,7 +1,7 @@
 # NestJS 학습 진행 상황
 
-> 📅 **마지막 업데이트**: 2026-01-03
-> 🎯 **다음 할 일**: Week 2 마무리 - UpdateUserDto 개선 (PartialType), Swagger 데코레이터 추가
+> 📅 **마지막 업데이트**: 2026-01-20
+> 🎯 **다음 할 일**: Week 2 마무리 - Swagger 데코레이터 추가 (@ApiTags, @ApiOperation, @ApiResponse)
 
 ---
 
@@ -142,6 +142,26 @@
 ---
 
 ## 📝 학습 노트
+
+### 2026-01-20 (Day 8)
+
+**완료한 것**:
+- ✅ UpdateUserDto 개선 (PartialType 적용)
+  - @nestjs/mapped-types 패키지 설치
+  - PartialType(CreateUserDto)를 extends하여 코드 중복 제거
+  - CreateUserDto의 모든 필드가 자동으로 optional로 변환됨
+
+**배운 개념**:
+- **PartialType**: 기존 DTO를 상속받아 모든 필드를 선택적(optional)으로 만드는 유틸리티
+  - 코드 중복 없이 UpdateUserDto 생성 가능
+  - CreateUserDto의 검증 규칙이 자동으로 상속됨
+- **import 경로**: 같은 폴더의 파일은 `./파일명`으로 import
+
+**다음 세션 계획**:
+- Swagger 데코레이터 추가 (@ApiTags, @ApiOperation, @ApiResponse)
+- +id → id 변경 (transform: true 이미 적용됨)
+
+---
 
 ### 2026-01-03 (Day 7) 🎉
 
