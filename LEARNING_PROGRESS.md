@@ -1,7 +1,7 @@
 # NestJS 학습 진행 상황
 
-> 📅 **마지막 업데이트**: 2026-01-20
-> 🎯 **다음 할 일**: Week 2 마무리 - Swagger 데코레이터 추가 (@ApiTags, @ApiOperation, @ApiResponse)
+> 📅 **마지막 업데이트**: 2026-04-07
+> 🎯 **다음 할 일**: Swagger 데코레이터 추가 계속 - Step 2 (update-user.dto.ts에 @ApiProperty 추가) → Step 3 (Controller에 @ApiTags, @ApiOperation, @ApiResponse 추가)
 
 ---
 
@@ -110,7 +110,10 @@
 - [x] **Controller 업데이트** ✅ 완료 (2026-01-03)
   - GET /users/:id, PATCH /users/:id, DELETE /users/:id 추가
   - @Param, @Patch, @Delete 데코레이터 사용
-- [ ] Swagger 데코레이터 추가
+- [ ] Swagger 데코레이터 추가 🔄 진행중
+  - ✅ CreateUserDto에 @ApiProperty() 추가 완료 (2026-04-07)
+  - 다음: UpdateUserDto에 @ApiProperty() 추가
+  - 다음: Controller에 @ApiTags, @ApiOperation, @ApiResponse 추가
 - [x] **전체 CRUD 테스트** ✅ 완료 (2026-01-03)
   - 모든 엔드포인트 정상 동작 확인
   - Validation 동작 확인
@@ -142,6 +145,30 @@
 ---
 
 ## 📝 학습 노트
+
+### 2026-04-07 (Day 9)
+
+**완료한 것**:
+- ✅ CreateUserDto에 @ApiProperty() 데코레이터 추가
+  - `@nestjs/swagger`에서 `ApiProperty` import
+  - name 필드: description, example, required 옵션 설정
+  - email 필드: description, example 옵션 설정
+  - Swagger UI에서 Example Value에 예시값 표시 확인
+
+**배운 개념**:
+- **Swagger**: API를 테스트하고 문서화해주는 웹 페이지
+- **@ApiProperty()**: DTO 필드에 설명과 예시값을 추가하는 데코레이터
+  - Swagger가 읽어서 API 문서에 표시
+  - 코드 동작에는 영향 없고 문서용 정보만 추가
+- **Swagger 데코레이터 종류**: @ApiTags, @ApiOperation, @ApiResponse, @ApiProperty
+- **Schema 탭**: Example Value가 아닌 Schema 탭에서 required 표시 확인 가능
+
+**다음 세션 계획**:
+- Step 2: UpdateUserDto에 @ApiProperty() 추가 (required: false)
+- Step 3: Controller에 @ApiTags, @ApiOperation, @ApiResponse 추가
+- Swagger UI에서 최종 확인
+
+---
 
 ### 2026-01-20 (Day 8)
 
